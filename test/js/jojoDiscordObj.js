@@ -1,7 +1,7 @@
 function getJoJoDiscordObj () {
     return {
         myAuth : null,
-        ver = "0.9.9",
+        ver : "0.9.9",
         
         initStatus : false,
         sellFlag : true,
