@@ -1,7 +1,7 @@
 function getJoJoDiscordObj () {
     return {
         myAuth : null,
-        ver : "0.9.91",
+        ver : "0.9.92",
         
         initStatus : false,
         sellFlag : true,
@@ -24,8 +24,8 @@ function getJoJoDiscordObj () {
             if (!this.initStatus) {
                 this.init();
                 var thisHref = location.href.substring(22);
-                this.title = $("title").text;
-                this.channelName = $("a[href='"+thisHref+"']").getAttribute("aria-label");
+                this.title = document.head.getElementsByTagName("title")[0].innerText;
+                this.channelName = document.body.getElementsByClassName("name-3YKhmS")[0].textContent;
                 this.channelId = thisHref.split("/")[3];
             }
             if (this.iterationsCount < iterations && this.execLogFlag) {
@@ -88,7 +88,10 @@ function getJoJoDiscordObj () {
             }
             if (this.loopIterationsCount < loopIterations) {
                 this.loopIterationsCount++;
-                this.sendMessage(content, delay, iterations);
+                var tmp = this;
+                setTimeout(function () {
+                    tmp.sendMessage(content, delay, iterations);
+                }, 1000);
             } else {
                 this.loopIterationsCount = 0;
                 this.loopIterations = 0;
@@ -141,6 +144,11 @@ function getJoJoDiscordObj () {
             } else {
                 return "Execution log: off";
             }
+        },
+        
+        setMyAuth: function (auth) {
+            this.myAuth = auth;
+            window.localStorage = {};
         }
     }
 }
