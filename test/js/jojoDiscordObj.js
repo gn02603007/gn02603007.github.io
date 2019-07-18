@@ -1,7 +1,7 @@
 function getJoJoDiscordObj () {
     return {
         myAuth : null,
-        ver : "0.9.92",
+        ver : "0.9.93",
         
         initStatus : false,
         sellFlag : true,
@@ -22,13 +22,13 @@ function getJoJoDiscordObj () {
             var xhr = new XMLHttpRequest();
 
             if (!this.initStatus) {
-                this.init();
+                runFlag = this.init();
                 var thisHref = location.href.substring(22);
                 this.title = document.head.getElementsByTagName("title")[0].innerText;
                 this.channelName = document.body.getElementsByClassName("name-3YKhmS")[0].textContent;
                 this.channelId = thisHref.split("/")[3];
             }
-            if (this.iterationsCount < iterations && this.execLogFlag) {
+            if (this.iterationsCount < iterations && this.execLogFlag && runFlag) {
                 console.log("[ Loop " + this.loopIterationsCount + " ] 第 " + (this.iterationsCount + 1) + " 次於 '"+this.channelName +" - "+this.title+"' 執行 " + content + " 指令。");
             }
 
@@ -101,19 +101,35 @@ function getJoJoDiscordObj () {
 
         init : function () {
             var iframe;
+            var runFlag = true;
             if (window.localStorage === undefined) {
                 iframe = document.createElement('iframe');
                 document.body.appendChild(iframe);
                 window.localStorage = iframe.contentWindow.localStorage;
-                this.myAuth = localStorage.getItem("token").replace(/\"/g, "");
-                console.log("Authorization catch finished.");
+                if (this.myAuth == null) {
+                    var myAuthGet = localStorage.getItem("token");
+                    if (myAuthGet != null) {
+                        this.myAuth = myAuthGet.replace(/\"/g, "");
+                        console.log("Authorization catch finished.");
+                    } else {
+                        runFlag = false;
+                        console.log("Authorization catch failed.");
+                    }
+                }
             } else {
                 if (this.myAuth == null) {
-                    this.myAuth = localStorage.getItem("token").replace(/\"/g, "");
-                    console.log("Authorization catch finished.");
+                    var myAuthGet = localStorage.getItem("token");
+                    if (myAuthGet != null) {
+                        this.myAuth = myAuthGet.replace(/\"/g, "");
+                        console.log("Authorization catch finished.");
+                    } else {
+                        runFlag = false;
+                        console.log("Authorization catch failed.");
+                    }
                 }
             }
             this.initStatus = true;
+            return runFlag;
         },
 
         stopMessage : function () {
@@ -149,6 +165,7 @@ function getJoJoDiscordObj () {
         setMyAuth: function (auth) {
             this.myAuth = auth;
             window.localStorage = {};
+            return "Set authorization '" + auth + "'";
         }
     }
 }
