@@ -1,7 +1,7 @@
 function getJoJoDiscordObj () {
     return {
         myAuth : null,
-        ver : "0.9.9",
+        ver : "0.9.91",
         
         initStatus : false,
         sellFlag : true,
@@ -88,9 +88,7 @@ function getJoJoDiscordObj () {
             }
             if (this.loopIterationsCount < loopIterations) {
                 this.loopIterationsCount++;
-                setTimeout(function () {
-                    this.sendMessage(content, delay, iterations);
-                }, 500);
+                this.sendMessage(content, delay, iterations);
             } else {
                 this.loopIterationsCount = 0;
                 this.loopIterations = 0;
