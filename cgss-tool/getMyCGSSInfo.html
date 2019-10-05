@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>CGSS Info Get</title>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+<div class="main">
+    
+    <div><input id="id" placeholder="id" type="text" value="382117189"/> <input id="get" type="button" onclick="getMyInfo()" value="send"/></div>
+    <div>
+        <div>Name: <span id="name"></span></div>
+        <div>Comment: <span id="comment"></span></div>
+        <div>M FC: <span id="fc_m"></span></div>
+        <div>M+ FC: <span id="fc_m_plus"></span></div>
+        <div>Fans: <span id="fans"></span></div>
+        <div>PLv: <span id="plv"></span></div>
+        <div>PRP: <span id="prp"></span></div>
+    </div>
+    
+</div>
+<div class="footer">
+    <!-- <div style="display:none;"><img src="https://deresute.me/930604728/medium"></div> -->
+</div>
+</body>
+<script>
+$(function(){
+});
+
+function getMyInfo () {
+    console.log("My input: " + $("#id").val());
+    $.ajax({
+        url: "https://deresute.me/" + $("#id").val() + "/json",
+        dataType: "JSON",
+        method: "GET",
+        headers: {"Content-Type": "application/json"},
+        beforeSend:function() {
+        },
+        success:function(result, status, xhr) {
+            try {
+                console.log(result);
+                $("#name").val(result.name);
+                $("#comment").val(result.comment);
+                $("#plv").val(result.level);
+                $("#prp").val(result.prp);
+                $("#fans").val(result.fan);
+                $("#fc_m").val(result.full_combo.master);
+                $("#fc_m_plus").val(result.full_combo.master_plus);
+            } catch (e) {
+            }
+        },
+        error:function(xhr, status, error) {
+        },
+        complete:function(xhr, status) {
+        }
+    });
+}
+</script>
+<style>
+</style>
+</html>
