@@ -32,7 +32,6 @@ function getMyInfo () {
         url: "https://deresute.me/" + $("#id").val() + "/json",
         dataType: "JSON",
         method: "GET",
-        headers: {"Content-Type": "application/json"},
         beforeSend:function() {
         },
         success:function(result, status, xhr) {
