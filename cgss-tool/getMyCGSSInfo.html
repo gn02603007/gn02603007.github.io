@@ -28,29 +28,22 @@ $(function(){
 
 function getMyInfo () {
     console.log("My input: " + $("#id").val());
-    $.ajax({
-        url: "https://deresute.me/" + $("#id").val() + "/json",
-        dataType: "JSON",
-        method: "GET",
-        beforeSend:function() {
-        },
-        success:function(result, status, xhr) {
-            try {
-                console.log(result);
-                $("#name").val(result.name);
-                $("#comment").val(result.comment);
-                $("#plv").val(result.level);
-                $("#prp").val(result.prp);
-                $("#fans").val(result.fan);
-                $("#fc_m").val(result.full_combo.master);
-                $("#fc_m_plus").val(result.full_combo.master_plus);
-            } catch (e) {
-            }
-        },
-        error:function(xhr, status, error) {
-        },
-        complete:function(xhr, status) {
+    fetch("https://deresute.me/" + $("#id").val() + "/json").then(function(response){
+        if (response.status != 200) {
+            console.log("Something error. Status: " + response.status);
+        } else {
+            var result = response.json();
+            console.log(result);
+            $("#name").val(result.name);
+            $("#comment").val(result.comment);
+            $("#plv").val(result.level);
+            $("#prp").val(result.prp);
+            $("#fans").val(result.fan);
+            $("#fc_m").val(result.full_combo.master);
+            $("#fc_m_plus").val(result.full_combo.master_plus);
         }
+    }).catch(function(err){
+        console.log(err);
     });
 }
 </script>
