@@ -11,23 +11,46 @@ $(document).ready(function(){
     $(document).on("click", "#startBtn", function(){
         startCount();
     });
+    $(document).on("click", "#pauseBtn", function(){
+        pauseCount();
+    });
+    $(document).on("click", "#resetBtn", function(){
+        resetCount();
+    });
 });
 
 function startCount () {
     clearInterval(timer);
-    $("#count").text(0);
-    console.log(parseInt($("#times").val()) * 1000);
     timer = setInterval(function(){
-        console.log((parseInt($("#count").text()) + 1));
         $("#count").text((parseInt($("#count").text()) + 1));
     }, parseInt($("#times").val()) * 1000);
 }
+
+function pauseCount () {
+    clearInterval(timer);
+}
+
+function resetCount () {
+    clearInterval(timer);
+    $("#count").text(0);
+}
 </script>
+<style>
+.phone {
+    width: 100%;
+}
+input[type="number"] {
+    width: 50px;
+}
+</style>
 </head>
 <body>
-<div>
+<div class="phone">
     <div class="">
-        <div>每 <input type="number" min=1 step=1 value=1 id="times"/> 秒+1 <input type="button" value="start" id="startBtn"/></div>
+        <div>每 <input type="number" min=1 step=1 value=1 id="times"/> 秒+1</div>
+        <input type="button" value="start" id="startBtn" class="btn btn-xs btn-primary"/>
+        <input type="button" value="pause" id="pauseBtn" class="btn btn-xs btn-danger"/>
+        <input type="button" value="reset" id="resetBtn" class="btn btn-xs btn-warning"/>
     </div>
     <div class="">
         <div class="timeNow"></div>
