@@ -1,0 +1,38 @@
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<title>Count Seconds</title>
+<script>
+var count = 0;
+var timer;
+$(document).ready(function(){
+    $("#count").text(0);
+    $(document).on("click", "#startBtn", function(){
+        startCount();
+    });
+});
+
+function startCount () {
+    clearInterval(timer);
+    $("#count").text(0);
+    console.log(parseInt($("#times").val()) * 1000);
+    timer = setInterval(function(){
+        console.log((parseInt($("#count").text()) + 1));
+        $("#count").text((parseInt($("#count").text()) + 1));
+    }, parseInt($("#times").val()) * 1000);
+}
+</script>
+</head>
+<body>
+<div>
+    <div class="">
+        <div>每 <input type="number" min=1 step=1 value=1 id="times"/> 秒+1 <input type="button" value="start" id="startBtn"/></div>
+    </div>
+    <div class="">
+        <div class="timeNow"></div>
+        <div class="count"><span id="count"></span> times.</div>
+    </div>
+</div>
+</body>
+</html>
