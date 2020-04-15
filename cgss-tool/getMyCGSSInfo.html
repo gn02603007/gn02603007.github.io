@@ -28,22 +28,32 @@ $(function(){
 
 function getMyInfo () {
     console.log("My input: " + $("#id").val());
-    fetch("https://deresute.me/" + $("#id").val() + "/json", {mode: 'no-cors'}).then(function(response){
-        if (response.status != 200) {
-            console.log("Something error. Status: " + response.status);
-        } else {
-            var result = response.json();
-            console.log(result);
-            $("#name").val(result.name);
-            $("#comment").val(result.comment);
-            $("#plv").val(result.level);
-            $("#prp").val(result.prp);
-            $("#fans").val(result.fan);
-            $("#fc_m").val(result.full_combo.master);
-            $("#fc_m_plus").val(result.full_combo.master_plus);
+    $.ajax({
+        url: "https://deresute.me/" + $("#id").val() + "/json",
+        headers: {
+            method: "GET"
+        },
+        contentType : "application/json",
+        beforeSend:function() {
+            
+        },
+        success:function(result, status, xhr) {
+            try {
+                console.log(result);
+                $("#name").val(result.name);
+                $("#comment").val(result.comment);
+                $("#plv").val(result.level);
+                $("#prp").val(result.prp);
+                $("#fans").val(result.fan);
+                $("#fc_m").val(result.full_combo.master);
+                $("#fc_m_plus").val(result.full_combo.master_plus);
+            } catch (e) {
+            }
+        },
+        error:function(xhr, status, error) {
+        },
+        complete:function(xhr, status) {
         }
-    }).catch(function(err){
-        console.log(err);
     });
 }
 </script>

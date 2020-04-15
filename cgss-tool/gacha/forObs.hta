@@ -1,0 +1,35 @@
+<!DOCTYPE html> 
+<html>
+<HTA:APPLICATION/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
+<meta charset="UTF-8">
+    <title></title>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+       var reader;
+       $(document).ready(function(){
+           $("#selectFile").on("change", function () {
+               reader = new FileReader();
+               reader.readAsText($("#selectFile")[0].files[0]);
+               reader.onload = function(event) {
+                   $(".content").html(event.target.result);
+               }
+           });
+           window.resizeTo(200, 80);
+           $("#selectFile").click();
+       });
+    </script>
+    <style>
+        .content {
+            margin-left: 10px
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <input id="selectFile" type="file" style="display:none"/>
+        Now loading...
+    </div>
+</body>
+</html>
