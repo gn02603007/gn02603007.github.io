@@ -3,7 +3,26 @@
 <title>CGSS天井課金計算</title>
 <script src="./js/jquery-3.4.1.min.js"></script>
 <link href="./css/bootstrap.min.css"  rel="stylesheet">
+<style>
+.main {
+    margin-left: 5px;
+}
+
+.inline div {
+    display: inline;
+    padding-right: 20px;
+}
+
+.btn-sm-mine {
+    
+}
+
+.yushoListUnit {
+    display: none;
+}
+</style>
 </head>
+
 <body>
 <div class="main">
     
@@ -31,14 +50,14 @@
             <div>課金組合：</div>
             <div>總計：¥ <span id="totalJPY"></span></div>
             <ul class="yushoList">
-                <li id="A" style="display:none;">スタージュエル A (60 / ¥ 120) x <span class="count"></span></li>
-                <li id="B" style="display:none;">スタージュエル B (360 / ¥ 490) x <span class="count"></span></li>
-                <li id="C" style="display:none;">スタージュエル C (760 / ¥ 980) x <span class="count"></span></li>
-                <!-- <li id="D" style="display:none;">スタージュエル D (1300 / ¥ 1600) x <span class="count"></span></li> -->
-                <li id="E" style="display:none;">スタージュエル E (2650 / ¥ 3300) x <span class="count"></span></li>
-                <li id="F" style="display:none;">スタージュエル F (4200 / ¥ 5020) x <span class="count"></span></li>
-                <li id="G" style="display:none;">スタージュエル G (8400 / ¥ 10000) x <span class="count"></span></li>
-                <li id="special" style="display:none;">3回限定！スタージュエル (6300 / ¥ 4900) x <span class="count"></span></li>
+                <li id="A" class="yushoListUnit">スタージュエル A (60 / ¥ 120) x <span class="count"></span></li>
+                <li id="B" class="yushoListUnit">スタージュエル B (360 / ¥ 490) x <span class="count"></span></li>
+                <li id="C" class="yushoListUnit">スタージュエル C (760 / ¥ 980) x <span class="count"></span></li>
+                <!-- <li id="D" class="yushoListUnit">スタージュエル D (1300 / ¥ 1600) x <span class="count"></span></li> -->
+                <li id="E" class="yushoListUnit">スタージュエル E (2650 / ¥ 3300) x <span class="count"></span></li>
+                <li id="F" class="yushoListUnit">スタージュエル F (4200 / ¥ 5020) x <span class="count"></span></li>
+                <li id="G" class="yushoListUnit">スタージュエル G (8400 / ¥ 10000) x <span class="count"></span></li>
+                <li id="special" class="yushoListUnit">3回限定！スタージュエル (6300 / ¥ 4900) x <span class="count"></span></li>
             </ul>
         </div>
     </div>
@@ -47,11 +66,12 @@
 <div class="footer">
     <div style=""><img src="https://deresute.me/930604728/medium"></div>
 </div>
-</body>
+
 <script>
 const tenjoGacha = 300;
 const jewelPerGacha = 250;
 const specialJewelConst = 6300;
+const priceA = 120, priceB = 490, priceC = 980, priceD = 1600, priceE = 3300, priceF = 5020, priceG = 10000, priceSp1 = 4900;
 
 $(function(){
     init();
@@ -141,8 +161,8 @@ function getGachaCountTotal () {
         }
     });
     if (isNum($("#gachaCountNow").val()) || parseInt($("#gachaCountNow").val()) < 0) {
-        if (parseInt($("#gachaCountNow").val()) > 300) {
-            $("#gachaCountNow").val(300);
+        if (parseInt($("#gachaCountNow").val()) > tenjoGacha) {
+            $("#gachaCountNow").val(tenjoGacha);
         }
         if (parseInt($("#gachaCountNow").val()) < 0) {
             $("#gachaCountNow").val(0);
@@ -163,81 +183,66 @@ function getRemain60JewelPerGachaCount () {
 
 function showKakingGroup (needJewel) {
     $("li").hide();
+    $("li").children("span.count").each(function(){$(this).text(0);});
     var totalJPY = 0;
     if ($("#minBuy").prop("checked")) {
         var itemA = 0, itemB = 0, itemC = 0, itemD = 0, itemE = 0, itemF = 0, itemG = 0, tmp = needJewel;
         while (tmp > 0) {
-            if (tmp >= 8400) {
-                itemG = Math.floor(tmp/8400);
-                tmp = tmp%8400;
-            } else if (tmp > 8030) {
+            if (tmp > 8030) {
                 itemG++;
                 tmp -= 8400;
+                totalJPY += priceG;
             } else if (tmp > 3890) {
                 itemF++;
                 tmp -= 4200;
-                $("li#F").children("span.count").text(itemF);
-                $("li#F").show();
+                totalJPY += priceF;
             } else if (tmp > 2280) {
                 itemE++;
                 tmp -= 2650;
-                $("li#E").children("span.count").text(itemE);
-                $("li#E").show();
+                totalJPY += priceE;
 /*             } else if (tmp > 1120) {
                 itemD++;
                 tmp -= 1300;
-                $("li#D").children("span.count").text(itemD);
-                $("li#D").show(); */
+                totalJPY += priceD; */
             } else if (tmp > 720) {
                 itemC++;
                 tmp -= 760;
-                $("li#C").children("span.count").text(itemC);
-                $("li#C").show();
+                totalJPY += priceC;
             } else if (tmp > 240) {
                 itemB++;
-                tmp -=360;
-                $("li#B").children("span.count").text(itemB);
-                $("li#B").show();
+                tmp -= 360;
+                totalJPY += priceB;
             } else if (tmp > 0) {
-                itemA = Math.ceil(tmp/60);
-                tmp -= itemA*60;
-                $("li#A").children("span.count").text(itemA);
-                $("li#A").show();
+                itemA = Math.ceil(tmp / 60);
+                tmp -= itemA * 60;
+                totalJPY += priceA;
             }
         }
-        if (itemG > 0) {
-            $("li#G").children("span.count").text(itemG);
-            $("li#G").show();
-        }
-        
-        totalJPY = itemA*120 + itemB*490 + itemC*980 + itemE*3300 + itemF*5020 + itemG*10000;
     } else {
-        var itemG = Math.ceil(needJewel/8400);
-        $("li#G").children("span.count").text(itemG);
-        $("li#G").show();
-        totalJPY = itemG*10000;
+        var itemG = Math.ceil(needJewel / 8400);
+        totalJPY += itemG * priceG;
     }
+    
     if ($("#specialJewelFlag").prop("checked")) {
         var special = parseInt($("#specialJewel").val());
-        totalJPY += special*4900;
+        totalJPY += special * priceSp1;
         $("li#special").children("span.count").text(special);
-        $("li#special").show();
     }
+
     $("#totalJPY").text(totalJPY);
+    $("li#G").children("span.count").text(itemG);
+    $("li#F").children("span.count").text(itemF);
+    $("li#E").children("span.count").text(itemE);
+    $("li#D").children("span.count").text(itemD);
+    $("li#C").children("span.count").text(itemC);
+    $("li#B").children("span.count").text(itemB);
+    $("li#A").children("span.count").text(itemA);
+    $("li").children("span.count").each(function(){
+    	if (parseInt($(this).text()) > 0) {
+    		$(this).parent().show();
+    	}
+	});
 }
 </script>
-<style>
-.main {
-    margin-left: 5px;
-}
-
-.inline div {
-    display: inline;
-    padding-right: 20px;
-}
-
-.btn-sm-mine {
-    
-}
-</style>
+</body>
 </html>
