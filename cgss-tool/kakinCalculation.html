@@ -9,8 +9,8 @@
     
     <div class="personalInfo">
         <div>目前抽數：<input id="gachaCountNow" type="number" max="300" min="0" step="1"/></div>
-        <div>無償石：<input class="jewel musho" type="number" min="0" step="1"/></div>
-        <div>有償石：<input class="jewel yusho" type="number" min="0" step="1"/></div>
+        <div>合計：<input class="jewel total" type="number" min="0" step="1"/></div>
+        <div>有償：<input class="jewel yusho" type="number" min="0" step="1"/></div>
         <div>剩餘每日60石單抽<input id="remain60JewelPerGachaCount" type="number" min="0" step="1"/></div>
         <div>剩餘免費抽(單抽+10連抽：<input class="remainGachaCount" type="number" min="0" step="1"/> <button class="btn btn-sm btn-outline-secondary plus1">+1</button> <button class="btn btn-sm btn-outline-secondary plus10">+10</button> <button class="btn btn-sm btn-outline-secondary reset">重設</button></div>
         <div>剩餘抽券(單抽+10連抽)：<input class="remainGachaCount" type="number" min="0" step="1"/> <button class="btn btn-sm btn-outline-secondary plus1">+1</button> <button class="btn btn-sm btn-outline-secondary plus10">+10</button> <button class="btn btn-sm btn-outline-secondary reset">重設</button></div>
@@ -32,23 +32,27 @@
             <div>總計：¥ <span id="totalJPY"></span></div>
             <ul class="yushoList">
                 <li id="A" style="display:none;">スタージュエル A (60 / ¥ 120) x <span class="count"></span></li>
-                <li id="B" style="display:none;">スタージュエル B (360 / ¥ 480) x <span class="count"></span></li>
-                <li id="C" style="display:none;">スタージュエル C (760 / ¥ 960) x <span class="count"></span></li>
-                <li id="D" style="display:none;">スタージュエル D (1300 / ¥ 1600) x <span class="count"></span></li>
-                <li id="E" style="display:none;">スタージュエル E (2650 / ¥ 3200) x <span class="count"></span></li>
-                <li id="F" style="display:none;">スタージュエル F (4200 / ¥ 5000) x <span class="count"></span></li>
-                <li id="G" style="display:none;">スタージュエル G (8400 / ¥ 9800) x <span class="count"></span></li>
-                <li id="special" style="display:none;">4回限定！スタージュエル (6300 / ¥ 5000) x <span class="count"></span></li>
+                <li id="B" style="display:none;">スタージュエル B (360 / ¥ 490) x <span class="count"></span></li>
+                <li id="C" style="display:none;">スタージュエル C (760 / ¥ 980) x <span class="count"></span></li>
+                <!-- <li id="D" style="display:none;">スタージュエル D (1300 / ¥ 1600) x <span class="count"></span></li> -->
+                <li id="E" style="display:none;">スタージュエル E (2650 / ¥ 3300) x <span class="count"></span></li>
+                <li id="F" style="display:none;">スタージュエル F (4200 / ¥ 5020) x <span class="count"></span></li>
+                <li id="G" style="display:none;">スタージュエル G (8400 / ¥ 10000) x <span class="count"></span></li>
+                <li id="special" style="display:none;">3回限定！スタージュエル (6300 / ¥ 4900) x <span class="count"></span></li>
             </ul>
         </div>
     </div>
     
 </div>
 <div class="footer">
-    <div style="display:none;"><img src="https://deresute.me/930604728/medium"></div>
+    <div style=""><img src="https://deresute.me/930604728/medium"></div>
 </div>
 </body>
 <script>
+const tenjoGacha = 300;
+const jewelPerGacha = 250;
+const specialJewelConst = 6300;
+
 $(function(){
     init();
     $("input").on("change", function(){
@@ -81,21 +85,18 @@ function isNum (input) {
 }
 
 function calculate () {
-    const tenjoGacha = 300;
-    const jewelPerGacha = 250;
     var holdJewelTotal = getHoldJewelTotal ();
     var gachaCountTotal = getGachaCountTotal();
     var needJewel = 0;
     var needUnit = 0;
     var needGacha = 0;
     var specialJewel = 0;
-    const specialJewelConst = 6300;
     if ($("#specialJewelFlag").prop("checked")) {
         if (!isNum($("#specialJewel").val()) || parseInt($("#specialJewel").val()) < 0) {
             $("#specialJewel").val(0);
         } else {
-            if (parseInt($("#specialJewel").val()) > 4) {
-                $("#specialJewel").val(4);
+            if (parseInt($("#specialJewel").val()) > 3) {
+                $("#specialJewel").val(3);
             }
         }
         var tmp = parseInt($("#specialJewel").val());
@@ -119,10 +120,10 @@ function calculate () {
 }
 
 function getHoldJewelTotal () {
-    if (!isNum($(".jewel.musho").val()) || parseInt($(".jewel.musho").val()) < 0) {
-        $(".jewel.musho").val(0);
+    if (!isNum($(".jewel.total").val()) || parseInt($(".jewel.total").val()) < parseInt($(".jewel.yusho").val())) {
+        $(".jewel.total").val($(".jewel.yusho").val());
     }
-    var holdMushoJewel = parseInt($(".jewel.musho").val());
+    var holdMushoJewel = parseInt($(".jewel.total").val()) - parseInt($(".jewel.yusho").val());
     if (!isNum($(".jewel.yusho").val()) || parseInt($(".jewel.yusho").val()) < 0) {
         $(".jewel.yusho").val(0);
     }
@@ -172,27 +173,27 @@ function showKakingGroup (needJewel) {
             } else if (tmp > 8030) {
                 itemG++;
                 tmp -= 8400;
-            } else if (tmp > 4160) {
+            } else if (tmp > 3890) {
                 itemF++;
                 tmp -= 4200;
                 $("li#F").children("span.count").text(itemF);
                 $("li#F").show();
-            } else if (tmp > 2480) {
+            } else if (tmp > 2280) {
                 itemE++;
                 tmp -= 2650;
                 $("li#E").children("span.count").text(itemE);
                 $("li#E").show();
-            } else if (tmp > 1120) {
+/*             } else if (tmp > 1120) {
                 itemD++;
                 tmp -= 1300;
                 $("li#D").children("span.count").text(itemD);
-                $("li#D").show();
-            } else if (tmp > 540) {
+                $("li#D").show(); */
+            } else if (tmp > 720) {
                 itemC++;
                 tmp -= 760;
                 $("li#C").children("span.count").text(itemC);
                 $("li#C").show();
-            } else if (tmp > 180) {
+            } else if (tmp > 240) {
                 itemB++;
                 tmp -=360;
                 $("li#B").children("span.count").text(itemB);
@@ -209,16 +210,16 @@ function showKakingGroup (needJewel) {
             $("li#G").show();
         }
         
-        totalJPY = itemA*120 + itemB*480 + itemC*960 + itemD*1600 + itemE*3200 + itemF*5000 + itemG*9800;
+        totalJPY = itemA*120 + itemB*490 + itemC*980 + itemE*3300 + itemF*5020 + itemG*10000;
     } else {
         var itemG = Math.ceil(needJewel/8400);
         $("li#G").children("span.count").text(itemG);
         $("li#G").show();
-        totalJPY = itemG*9800;
+        totalJPY = itemG*10000;
     }
     if ($("#specialJewelFlag").prop("checked")) {
         var special = parseInt($("#specialJewel").val());
-        totalJPY += special*5000;
+        totalJPY += special*4900;
         $("li#special").children("span.count").text(special);
         $("li#special").show();
     }
