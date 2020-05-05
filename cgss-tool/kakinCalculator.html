@@ -27,17 +27,21 @@
 <div class="main">
     
     <div class="personalInfo">
-        <div>目前抽數：<input id="gachaCountNow" type="number" max="300" min="0" step="1"/></div>
-        <div>合計：<input class="jewel total" type="number" min="0" step="1"/></div>
-        <div>有償：<input class="jewel yusho" type="number" min="0" step="1"/></div>
-        <div>剩餘每日60石單抽<input id="remain60JewelPerGachaCount" type="number" min="0" step="1"/></div>
-        <div>剩餘免費抽(單抽+10連抽：<input class="remainGachaCount" type="number" min="0" step="1"/> <button class="btn btn-sm btn-outline-secondary plus1">+1</button> <button class="btn btn-sm btn-outline-secondary plus10">+10</button> <button class="btn btn-sm btn-outline-secondary reset">重設</button></div>
-        <div>剩餘抽券(單抽+10連抽)：<input class="remainGachaCount" type="number" min="0" step="1"/> <button class="btn btn-sm btn-outline-secondary plus1">+1</button> <button class="btn btn-sm btn-outline-secondary plus10">+10</button> <button class="btn btn-sm btn-outline-secondary reset">重設</button></div>
+        <div class="input-group input-group-sm mb-3">
+            <div>目前抽數<input id="gachaCountNow" class="form-control" type="number" max="300" min="0" step="1"/></div>
+            <div>合計<input class="jewel total form-control" type="number" min="0" step="1"/></div>
+            <div>有償<input class="jewel yusho form-control" type="number" min="0" step="1"/></div>
+        </div>
+        <div class="input-group input-group-sm mb-3">
+            <div>剩餘每日60石單抽<input id="remain60JewelPerGachaCount" class="form-control" type="number" min="0" step="1"/></div>
+            <div>剩餘免費抽(單抽+10連抽)<input class="remainGachaCount form-control" type="number" min="0" step="1"/> <button class="btn btn-sm btn-outline-secondary plus1">+1</button> <button class="btn btn-sm btn-outline-secondary plus10">+10</button> <button class="btn btn-sm btn-outline-secondary reset">重設</button></div>
+            <div>剩餘抽券(單抽+10連抽)<input class="remainGachaCount form-control" type="number" min="0" step="1"/> <button class="btn btn-sm btn-outline-secondary plus1">+1</button> <button class="btn btn-sm btn-outline-secondary plus10">+10</button> <button class="btn btn-sm btn-outline-secondary reset">重設</button></div>
+        </div>
     </div>
     <hr/>
     <div class="option">
         <div><label><input id="minBuy" type="checkbox"/><span> 我想盡可能只課剛剛好的石頭</span></label></div>
-        <div><label><input id="specialJewelFlag" type="checkbox"/><span> 我還有優惠石 </span><input id="specialJewel" type="number" max="4" min="0" step="1"/><span> 組 可以買</span></label></div>
+        <div class="input-group"><label class="form-inline"><input id="specialJewelFlag" type="checkbox"/><span> 我還有優惠石 </span><input id="specialJewel" type="number" class="form-control" max="4" min="0" step="1"/><span> 組 可以買</span></label></div>
     </div>
     <hr/>
     <div class="result">
