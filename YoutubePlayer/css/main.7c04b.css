@@ -1,17 +1,13 @@
 .control-panel {
     background: black;
     width: 640px;
-    height: 360px;
 }
 
 .player {
 }
 
-.controller {
-    height: 100%;
-}
-
 .toolbar {
+    min-height: 30px;
 }
 
 .toolbar .toolbar-component {
@@ -100,4 +96,12 @@ tbody td div.title {
 input[name='playbackRate'] {
     padding: 0px;
     border-width: 0px;
+}
+
+.function-menu li {
+    cursor: pointer;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
