@@ -1,0 +1,22 @@
+.control-panel {
+    background: black;
+    width: 640px;
+}
+
+.export-btn,.export-btn:link,.export-btn:visited {
+    text-decoration: none;
+    color: black;
+}
+
+input[name='playbackRate'] {
+    padding: 0px;
+    border-width: 0px;
+}
+
+.function-menu li {
+    cursor: pointer;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
