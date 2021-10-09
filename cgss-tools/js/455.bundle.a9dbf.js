@@ -1,1 +1,0 @@
-(self.webpackChunkcgss_tools=self.webpackChunkcgss_tools||[]).push([[455],{9455:function(t,e,n){"use strict";n.r(e),n.d(e,{default:function(){return u}});var s=n(7294);function u(t){return t.store,t.dispatch,s.useEffect((function(){document.title="Comming soon..."}),[]),s.createElement(s.Fragment,null)}}}]);

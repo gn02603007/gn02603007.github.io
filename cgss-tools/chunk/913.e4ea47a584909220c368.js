@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcgss_tools=self.webpackChunkcgss_tools||[]).push([[913],{9455:(e,t,s)=>{var u=s(530);Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){var{store:t,dispatch:s}=e;return l.default.useEffect((function(){document.title="Comming soon..."}),[]),l.default.createElement(l.default.Fragment,null)};var l=u(s(7294))}}]);
